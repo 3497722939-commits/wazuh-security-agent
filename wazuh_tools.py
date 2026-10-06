@@ -99,7 +99,7 @@ TOOLS = [
         "type": "function",
         "function": {
             "name": "alert_summary",
-            "description": "获取告警概览统计：按主机聚合告警数量、按规则聚合Top N告警。用于快速了解整体安全状况。",
+            "description": "获取告警概览统计：按主机聚合告警数量、按规则聚合Top N告警。当用户询问整体安全状况、最近有什么告警/事件、高危事件、异常事件、安全概览、告警有多少、哪台主机告警多等问题时必须调用此工具获取真实数据。",
             "parameters": {
                 "type": "object",
                 "properties": {
