@@ -1,0 +1,27 @@
+# 凭据与配置
+.env
+*.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# 临时/构建产物
+tmp/
+test_reply.txt
+*.log
+
+# 论文与本地材料（不属于项目代码）
+毕业论文*.docx
+毕业论文*.md
+毕业论文*.pdf
+*.docx
+
+# IDE
+.idea/
+.vscode/
+
+# 系统
+.DS_Store
+Thumbs.db
