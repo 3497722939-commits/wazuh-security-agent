@@ -1,8 +1,34 @@
 ================================================================
-  蓝队安全分析 Agent - 启动流程手册
+  蓝队安全分析 Agent - 启动流程手册（更新版）
 ================================================================
 
 从零开始到能对话，按顺序操作即可。
+
+
+------------------------------------------------------------
+第零步（首次使用才需要）：安装依赖 + 配置 .env
+------------------------------------------------------------
+
+1. 安装 Python 依赖（只需一次）：
+
+   cd /d D:\agent
+   C:\Users\34977\AppData\Local\Programs\Python\Python313\python.exe -m pip install -r requirements.txt
+
+   看到 "Successfully installed" 即成功。
+
+2. 配置 .env（只需一次）：
+
+   把 D:\agent\.env.example 复制一份改名为 .env，然后填写：
+
+   WAZUH_INDEXER_URL=https://192.168.174.137:9200
+   WAZUH_USERNAME=admin
+   WAZUH_PASSWORD=<你的Indexer密码>
+   LLM_BASE_URL=<你的LLM接口地址>
+   LLM_API_KEY=<你的LLM Key>
+   LLM_MODEL=<模型名>
+
+   - Wazuh 相关密码忘了可以查 D:\wazuh-setup\wazuh-passwords.txt
+   - LLM 配置用任意 OpenAI 兼容接口（支持 function calling）
 
 
 ------------------------------------------------------------
@@ -32,7 +58,7 @@
 
   - 如果能看到 Wazuh 登录页面，说明 Wazuh 正常
   - 用户名：admin
-  - 密码：<你的Wazuh管理密码>
+  - 密码：<你的Wazuh管理密码>（见第零步）
   - 浏览器提示证书不安全，点"高级" -> "继续访问"
 
   如果打不开，等 1 分钟再试（虚拟机还在启动中）。
@@ -84,8 +110,17 @@
 Q: 浏览器打不开 https://192.168.174.137:443
 A: 虚拟机还没启动完，或者虚拟机没启动。回到第一步。
 
-Q: Agent 启动时报错 "WAZUH_PASSWORD 未设置"
-A: 确认 D:\agent\.env 文件存在，里面有 WAZUH_PASSWORD=...
+Q: 启动时报 "ModuleNotFoundError: No module named 'xxx'"
+A: 依赖没装完。执行第零步第 1 条：pip install -r requirements.txt。
+
+Q: 启动时报错 "WAZUH_PASSWORD 未设置"
+A: 确认 D:\agent\.env 文件存在，里面有 WAZUH_PASSWORD=...。没有就按第零步第 2 条配置。
+
+Q: Agent 启动了但回复"未配置 API Key"或一直报错
+A: 检查 .env 里的 LLM_API_KEY 和 LLM_BASE_URL 是否填对（用 OpenAI 兼容接口）。
+
+Q: Agent 回答像没调用工具 / 不查数据
+A: 确认 Wazuh 虚拟机已启动（第一步），否则查询会失败；再确认 .env 的 Indexer 密码正确。
 
 Q: 浏览器打开 http://localhost:8766 打不开
 A: 确认第三步的命令行窗口还开着，没有关闭。
